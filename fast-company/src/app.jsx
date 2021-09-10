@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import api from "./API";
-import Users from "./components/users";
+import Pagination from "./components/pagination";
 
 const App = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
   const [count, setCount] = useState(users.length);
+  const [page, setPage] = useState(1);
 
   const handleDelete = (userId) => {
     const updatedUsers = users.filter((user) => {
@@ -12,6 +13,10 @@ const App = () => {
     });
     setUsers(updatedUsers);
     setCount(count - 1);
+  };
+
+  const handlePage = (event) => {
+    setPage(Number(event.target.textContent));
   };
 
   const theadRemove = () => {
@@ -22,13 +27,18 @@ const App = () => {
       }
     }
   };
+
   return (
-    <Users
-      onDelete={handleDelete}
-      onTheadRemove={theadRemove}
-      users={users}
-      count={count}
-    />
+    <>
+      <Pagination
+        onDelete={handleDelete}
+        onTheadRemove={theadRemove}
+        onPage={handlePage}
+        users={users}
+        count={count}
+        page={page}
+      />
+    </>
   );
 };
 

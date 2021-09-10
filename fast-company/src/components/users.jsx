@@ -2,7 +2,8 @@ import React from "react";
 import SearchStatus from "./searchStatus";
 import User from "./user";
 
-const Users = ({ onDelete, onTheadRemove, users, count }) => {
+const Users = ({ onDelete, onTheadRemove, users, count, page }) => {
+  let currentArrOfUsers = users.slice(4 * (page - 1), page * 4);
   return (
     <>
       <SearchStatus count={count} />
@@ -18,7 +19,7 @@ const Users = ({ onDelete, onTheadRemove, users, count }) => {
           </tr>
         </thead>
         <tbody className="">
-          {users.map((user) => {
+          {currentArrOfUsers.map((user) => {
             return <User key={user._id} user={user} handleDelete={onDelete} />;
           })}
         </tbody>
